@@ -6,7 +6,7 @@ end
 
 function ETContainer{T,R}(A::VectorizedExpression{T,R})
     dat = Array{T,R}(size(A)...)
-    for i = 1:length(dat)
+    @inbounds for i = 1:length(dat)
         dat[i] = A[i]
     end
     return ETContainer(dat)

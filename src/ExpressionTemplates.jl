@@ -34,8 +34,7 @@ macro et(expr)
             local e = handle_expr(expr)
             return :(ETContainer($e).data)
         elseif (expr.head == :(=))
-            return  esc(:($(expr.args[1]) = $(handle_expr(expr.args[2]))))
-            
+            return  esc(:($(expr.args[1]) = ETContainer($(handle_expr(expr.args[2]))).data ))
         end
     end
 end
@@ -50,12 +49,12 @@ function handle_expr(expr)
         return expr
 
     elseif (typeof(expr) == Expr)
-            
-            for i = 2:length(expr.args)
-                expr.args[i] = handle_expr(expr.args[i])
-            end
-            return expr
-            
+        
+        for i = 2:length(expr.args)
+            expr.args[i] = handle_expr(expr.args[i])
+        end
+        return expr
+        
     else
         return expr
     end
