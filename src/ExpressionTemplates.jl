@@ -34,8 +34,8 @@ macro et(expr)
             local e = handle_expr(expr)
             return :(ETContainer($e).data)
         elseif (expr.head == :(=))
-            println(error("Error: Assignment not supported. Use this instead: '$(expr.args[1]) = @et $(expr.args[2])'"))
-            exit()
+            return  esc(:($(expr.args[1]) = $(handle_expr(expr.args[2]))))
+            
         end
     end
 end
