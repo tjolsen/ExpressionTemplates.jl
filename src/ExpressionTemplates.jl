@@ -34,20 +34,18 @@ macro et(expr)
             local e = handle_expr(expr)
             return :(ETContainer($e).data)
         elseif (expr.head == :(=))
-            return  esc(:($(expr.args[1]) = ETContainer($(handle_expr(expr.args[2]))).data ))
+            return esc(:($(expr.args[1]) = ETContainer($(handle_expr(expr.args[2]))).data ))
         end
     end
 end
 
+
 # private recursive function to convert arrays into ETVectors, and let Julia + multiple dispatch run from there
 function handle_expr(expr)
-
+    
     if (typeof(expr) == Symbol)
-        if (typeof(eval(expr)) <: Array)
-            return :(ETContainer($expr))
-        end
-        return expr
-
+        return :(__symbol_wrapper($expr))
+        
     elseif (typeof(expr) == Expr)
         
         for i = 2:length(expr.args)
@@ -58,6 +56,14 @@ function handle_expr(expr)
     else
         return expr
     end
+end
+
+@generated function __symbol_wrapper{T,R}(x::Array{T,R})
+    return :(ETContainer{T,R}(x))
+end
+
+@generated function __symbol_wrapper(x)
+    return :x
 end
 
 #------------------------------------------------------------------------------------
