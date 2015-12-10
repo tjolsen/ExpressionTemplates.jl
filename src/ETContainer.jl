@@ -6,14 +6,14 @@ end
 
 function ETContainer{T,R}(A::VectorizedExpression{T,R})
     dat = Array{T,R}(size(A)...)
-    @inbounds for i = 1:length(dat)
-        dat[i] = A[i]
+    for i = 1:length(dat)
+        @inbounds dat[i] = A[i]
     end
     return ETContainer(dat)
 end
 
 @inline function getindex{T,R}(A::ETContainer{T,R}, i...)
-    return A.data[i...]
+    @inbounds return A.data[i...]
 end
 
 @inline function setindex!{T,R}(A::ETContainer{T,R}, x::T, i...)

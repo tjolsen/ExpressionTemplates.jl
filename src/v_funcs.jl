@@ -15,37 +15,36 @@ univar_funcs = [:exp, :expm1, :log, :log10, :log1p, :sqrt, :cbrt, :exponent, :si
          :asin, :acos, :atan, :acot, :asec, :acsc,
          :asinh, :acosh, :atanh, :acoth, :asech, :acsch, :sinc, :cosc]
 
-
-immutable ET_univar_func{T, R, ET<:VectorizedExpression} <: VectorizedExpression{T,R}
-    VE::ET
-    f::Function
-end
-
-@inline function getindex(A::ET_univar_func, i...)
-    return A.f(A.VE[i...])
-end
-
-@inline function length(A::ET_univar_func)
-    return length(A.VE)
-end
-
-@inline function size(A::ET_univar_func)
-    return size(A.VE)
-end
-
-export ET_univar_func
-
-# Generate overloaded methods for all functions
+# Generate types and methods for all functions
 macro gen_univar_funcs()
 
     for i = 1:length(univar_funcs)
 
         local op = univar_funcs[i]
         
+        # generate type name from function name
+        local opname = symbol("ET_", op)
+        
         eval(quote
              
+             immutable $opname{T,R,ET<:VectorizedExpression}<:VectorizedExpression{T,R}
+             VE::ET
+             end
+             
+             @inline function getindex(A::$opname, i...)
+             return $op(A.VE[i...])
+             end
+             
+             @inline function length(A::$opname)
+             return length(A.VE)
+             end
+             
+             @inline function size(A::$opname)
+             return size(A.VE)
+             end
+             
              @inline function ($op){T,R}(v::VectorizedExpression{T,R})
-             return ET_univar_func{T,R, typeof(v)}(v, $op)
+             return $opname{T,R, typeof(v)}(v)
              end
              
              export $op
