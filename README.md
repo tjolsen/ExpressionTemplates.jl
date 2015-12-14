@@ -20,4 +20,4 @@ For this model problem, I have found peak speedups of 5.25x over the native arra
 while a simple hand-coded loop, such as the one described above, only achieves 4x (on my machine).
 The benchmark showing the speedup of expression templates vs a hand-coded loop is shown in the image.
 
-[![Performance Benchmark](benchmark.svg)]
+![Performance Benchmark](benchmark.png)
