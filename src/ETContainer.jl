@@ -5,7 +5,7 @@ immutable ETContainer{T,R} <: VectorizedExpression{T,R}
 end
 
 function ETContainer{T,R}(A::VectorizedExpression{T,R})
-    dat = Array{T,R}(size(A)...)
+    dat = Array(T, size(A)...)
     L = length(dat)
     block_lim = 8*Int64(floor(L/8))
     for i = 1:8:block_lim

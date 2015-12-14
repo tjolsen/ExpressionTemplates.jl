@@ -33,3 +33,39 @@ begin
     @test dotdiv_et == dotdiv_native;
     
 end
+
+
+begin
+
+    N = 50
+    
+    A = rand(N,N)
+    B = rand(N,N)
+    C = rand(N,N)
+
+    #test order-2 arrays
+    @et res_et = A+B+C
+    res_native = A+B+C
+    
+    @test res_et == res_native
+
+
+end
+
+
+begin
+
+    N = 15
+    
+    A = rand(N,N,N)
+    B = rand(N,N,N)
+    C = rand(N,N,N)
+
+    #test order-2 arrays
+    @et res_et = A+B+C
+    res_native = A+B+C
+    
+    @test res_et == res_native
+
+
+end
