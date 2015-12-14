@@ -6,7 +6,7 @@ This package provides Julia with deferred evaluation of array expressions using 
 The purpose of the package is to greatly accelerate the evaluation of
 vectorized expressions by eliminating allocation of intermediate calculations.
 For example, for scalar a, b, c, d, and length-N vectors A, B, C, D, the expression
-**R = \alpha A + \beta B + \gamma C + \delta D**
+**R = a\*A + b\*B + c\*C + d\*D**
 requires the construction of *seven* temporary arrays.
 A more optimal way to compute this is to allocate an output array
 and compute the result index-by-index.
