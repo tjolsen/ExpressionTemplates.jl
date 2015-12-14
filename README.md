@@ -12,6 +12,8 @@ A more optimal way to compute this is to allocate an output array
 and compute the result index-by-index.
 Expression templates exploit the language's type system to do precisely this, thus
 avoiding the overhead of intermediate array allocations.
+The method is described in some detail in a C++ context here: 
+https://en.wikipedia.org/wiki/Expression_templates
 
 For this model problem, I have found peak speedups of 5.25x over the native array evaluation,
 while a simple hand-coded loop, such as the one described above, only achieves 4x (on my machine).
@@ -33,6 +35,11 @@ the ~/.julia/v0.4/ directory, as all subdirectories of this folder are automatic
 As far as users are concerned, this package provides one thing: the @et macro.
 This macro can be put at the beginning of a line or expression to trigger the usage
 of expression templates.
+The macro then parses the expression it is given, wraps arrays in appropriate types (no copying done),
+lets julia's multiple dispatch system build a complex type based on the operations called for in
+the expression, and finally constructs an array object index-by-index from this complex type.
+The result is that the two expressions below are exactly equal, but the one using @et will
+have avoided any unnecessary array allocations.
 
 ```julia
 
@@ -50,5 +57,6 @@ result = a*A + b*B + c*C + d*D # <---native arrays are slow!
 
 @et result2 = a*A + b*B + c*C + d*D # <--- expression templates are fast!
 
-```
+result == result2 # true
 
+```
