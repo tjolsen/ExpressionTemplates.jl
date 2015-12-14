@@ -61,11 +61,15 @@ begin
     B = rand(N,N,N)
     C = rand(N,N,N)
 
-    #test order-2 arrays
+    #test order-3 arrays
     @et res_et = A+B+C
     res_native = A+B+C
     
     @test res_et == res_native
 
-
+    # test .* and ./
+    @et res_et = A.*B./C
+    res_native = A.*B./C
+    
+    @test res_et == res_native
 end
