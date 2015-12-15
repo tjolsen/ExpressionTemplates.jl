@@ -25,12 +25,6 @@ begin
     
     @test res_et == res_native
 
-
-    # Ensure memory allocation is lower for @et case
-    mem_et = @allocated (@et (A+B+C+D)*(a+b+c+d))
-    mem_native = @allocated  (A+B+C+D)*(a+b+c+d)
-    
-    @test mem_et < mem_native
 end
 
 
