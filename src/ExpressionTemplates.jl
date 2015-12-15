@@ -18,6 +18,9 @@ include("vs_ops.jl")
 #include vector functions
 include("v_funcs.jl")
 
+#include special cases
+include("special_cases.jl")
+
 export VectorizedExpression
 
 end # end module
