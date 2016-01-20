@@ -61,12 +61,12 @@ function handle_expr(expr)
     end
 end
 
-@generated function __symbol_wrapper{T,R}(x::Array{T,R})
-    return :(ETContainer{T,R}(x))
+@inline function __symbol_wrapper{T,R}(x::Array{T,R})
+    return ETContainer{T,R}(x)
 end
 
-@generated function __symbol_wrapper(x)
-    return :x
+@inline function __symbol_wrapper(x)
+    return x
 end
 
 #------------------------------------------------------------------------------------
