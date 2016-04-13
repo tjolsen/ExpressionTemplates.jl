@@ -36,11 +36,12 @@ for Ni = 1:length(NN)
     tmp_loop_times = zeros(Niters)
     for iter = 1:Niters
         
+        #Disable garbage collection so it doesn't fire in the middle of a timed test
         gc_enable(false)
         tmp_et_times[iter] = @elapsed res = @et w*a + x*b + y*c + z*d
         tmp_nat_times[iter] = @elapsed res = w*a + x*b + y*c + z*d
         tmp_loop_times[iter] = @elapsed loop_kernel(w,a,x,b,y,c,z,d,N)
-        gc_enable(true);
+        gc_enable(true); #re-enable GC to clean up after the native array expression
     end
     
     et_times[Ni] = mean(tmp_et_times)
