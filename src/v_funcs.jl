@@ -21,7 +21,7 @@ for i = 1:length(univar_funcs)
     op = univar_funcs[i]
     
     # generate type name from function name
-    opname = symbol("ET_", op)
+    opname = Symbol("ET_", op)
     
     eval(quote
          
