@@ -1,6 +1,7 @@
 # This file generates types and function overloads for specified functions acting on VectorizedExpressions
 # The list of functions is not complete, and is restricted to those that naturally operate
 # index-by-index on an an expression.
+using Compat
 
 import Base.exp, Base.expm1, Base.log, Base.log10, Base.log1p, Base.sqrt, Base.cbrt, Base.exponent
 import Base.significand, Base.sin, Base.sinpi, Base.cos, Base.cospi, Base.tan, Base.sec, Base.cot, Base.csc
