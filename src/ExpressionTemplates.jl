@@ -23,6 +23,9 @@ include("special_cases.jl")
 
 export VectorizedExpression
 
+end # end module
+
+
 #------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------
 # Macro that does all of the magic! Just use the @et macro in front of expressions
@@ -44,7 +47,7 @@ end
 function handle_expr(expr)
     
     if (typeof(expr) == Symbol)
-        return :(ExpressionTemplates.__symbol_wrapper($expr))
+        return :(__symbol_wrapper($expr))
         
     elseif (typeof(expr) == Expr)
         
@@ -69,7 +72,4 @@ end
 #------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------
 export @et
-
-end # end module
-
 
